@@ -78,19 +78,19 @@ app.patch("/beers/:id",(req,res)=>{
     })
 })
 
-// app.put("/beers/:id",(req,res)=>{
-//     let beer = beers.find((beer)=>{
-//         return beer.id === req.params.id
-//     })
-//     console.log(beer.id)
-//     beers.splice(parseInt(beer.id) - 1,1,req.body)
-//     res.json({
-//         success:true,
-//         data:{
-//             beer: req.body
-//         }
-//     })
-// })
+app.put("/beers/:id",(req,res)=>{
+    let beer = beers.find((beer)=>{
+        return beer.id === req.params.id
+    })
+    console.log(beer.id)
+    beers.splice(parseInt(beer.id) - 1,1,req.body)
+    res.json({
+        success:true,
+        data:{
+            beer: req.body
+        }
+    })
+})
 
 app.delete("/beers/:id",(req,res)=>{
     let deletedBeer = beers.find((beer)=>{
