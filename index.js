@@ -32,7 +32,7 @@ let beers = [
 ]
 
 
-app.get('/beers',(req,res)=>{
+app.get('/beers',verification,(req,res)=>{
     res.json({
         success:true,
         data: {
@@ -41,7 +41,7 @@ app.get('/beers',(req,res)=>{
     })
 })
 
-app.get("/beers/:id",(req,res)=>{
+app.get("/beers/:id",verification,(req,res)=>{
     let beer = beers.find((beer)=>{
         return beer.id === req.params.id
     })
@@ -53,7 +53,7 @@ app.get("/beers/:id",(req,res)=>{
     })
 })
 
-app.post("/beers",(req,res)=>{
+app.post("/beers",verification,(req,res)=>{
     beers.push(req.body)
     res.json({
         success:true,
@@ -63,7 +63,7 @@ app.post("/beers",(req,res)=>{
     })
 })
 
-app.patch("/beers/:id",(req,res)=>{
+app.patch("/beers/:id",verification,(req,res)=>{
     beers.forEach(koder =>{
         if(koder.id === req.params.id){
             koder.precio = 100
@@ -78,7 +78,21 @@ app.patch("/beers/:id",(req,res)=>{
     })
 })
 
-app.delete("/beers/:id",(req,res)=>{
+// app.put("/beers/:id",verification,(req,res)=>{
+//     let beer = beers.find((beer)=>{
+//         return beer.id === req.params.id
+//     })
+//     console.log(beer.id)
+//     beers.splice(parseInt(beer.id) - 1,1,req.body)
+//     res.json({
+//         success:true,
+//         data:{
+//             beer: req.body
+//         }
+//     })
+// })
+
+app.delete("/beers/:id",verification,(req,res)=>{
     let deletedBeer = beers.find((beer)=>{
         return beer.id === req.params.id
     })
@@ -93,6 +107,12 @@ app.delete("/beers/:id",(req,res)=>{
         }
     })
 })
+
+function verification(req,res,next){
+    console.log(req.method)
+    console.log(req.route.path)
+    next()
+}
 
 
 app.listen(8080,()=>{
